@@ -24,7 +24,7 @@ private:
 	void printMarketStats();
 
 	/*This function will handle the offers*/
-	void enterOffer();
+	void enterAsk();
 
 	/*This function will handle the bids*/
 	void enterBid();

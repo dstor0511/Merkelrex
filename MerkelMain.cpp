@@ -50,7 +50,7 @@ void MerkelMain::printMarketStats() {
 	for (std::string const &p : orderBook.getKnownProducts()) {
 		std::cout << "Product: " << p << std::endl;
 		std::vector<OrderBookEntry> entries = orderBook.getOrders(
-		        OrderBookType::ask, p, "2020/03/17 17:01:24.884492");
+		        OrderBookType::ask, p, currentTime);
 		std::cout << "Asks for product seen: " << entries.size() << std::endl;
 		std::cout << "Max ask: " << OrderBook::getHighPrice(entries) << std::endl;
 		std::cout << "Min ask: " << OrderBook::getLowPrice(entries) << std::endl;
@@ -76,8 +76,11 @@ void MerkelMain::printMarketStats() {
 }
 
 /*This function will handle the offers*/
-void MerkelMain::enterOffer() {
-	std::cout << "Mark and offer - enter the amount " << std::endl;
+void MerkelMain::enterAsk() {
+	std::cout << "Mark and ask - enter the amount: product,price,amount, eg ETH/BTC,200,0.5 " << std::endl;
+	std::string input;
+	std::getline(std::cin, input);
+	std::cout << "You typed: " << input << std::endl;
 }
 
 /*This function will handle the bids*/
@@ -124,7 +127,7 @@ void MerkelMain::processUserOption(int userOption) {
 	}
 	if (userOption == 3) {
 		/*execution of the enterOffer function*/
-		enterOffer();
+		enterAsk();
 	}
 	if (userOption == 4) {
 		/*execution of the enterBid function*/
