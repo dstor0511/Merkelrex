@@ -14,9 +14,14 @@ public:
 	 * 2020/03/17 17:01:24.884492,ETH/BTC,bid,0.02187305,6.85567013
 	 */
 	static std::vector<OrderBookEntry> readCSV(std::string csvFile);
+	static std::vector<std::string> tokenise(std::string csvLine, char separator);
+	static OrderBookEntry stringsToOBE(std::string price,
+	                                   std::string amount,
+	                                   std::string timestamp,
+	                                   std::string product,
+	                                   OrderBookType OrderBookEntry);
 
 private:
-	static std::vector<std::string> tokenise(std::string csvLine, char separator);
 
 	static OrderBookEntry stringsToOBE(std::vector<std::string> strings);
 };

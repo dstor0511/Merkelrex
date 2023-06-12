@@ -12,8 +12,12 @@ public:
 	/*Define constructor function and define data types of the class as arguments
 	 * of the constructor function, additionally insert the initialization list
 	 * (end of the argument parenthesis)*/
-	OrderBookEntry(double _price, double _amount, std::string _timestamp,
-	               std::string _product, OrderBookType _orderType);
+	OrderBookEntry(double _price,
+	               double _amount,
+	               std::string _timestamp,
+	               std::string _product,
+	               OrderBookType _orderType);
+
 	static OrderBookType stringToOrderBookType(const std::string &s);
 
 	/*Data members*/

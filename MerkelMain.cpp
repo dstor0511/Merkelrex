@@ -3,6 +3,7 @@
 #include "OrderBookEntry.h"
 #include <iostream>
 #include <vector>
+#include <limits> // Include the <limits> header
 
 /*This is the constructor function*/
 MerkelMain::MerkelMain() {};
@@ -80,6 +81,28 @@ void MerkelMain::enterAsk() {
 	std::cout << "Mark and ask - enter the amount: product,price,amount, eg ETH/BTC,200,0.5 " << std::endl;
 	std::string input;
 	std::getline(std::cin, input);
+
+	std::vector<std::string> tokens = CSVReader::tokenise(input, ',');
+	if (tokens.size() != 3 ) {
+		std::cout << "Bad input!" << input << "Please make sure you don't use spaces between the 3 values" << std::endl;
+
+	}
+	else {
+		try {
+			OrderBookEntry obe = CSVReader::stringsToOBE(
+			                         tokens[1],
+			                         tokens[2],
+			                         currentTime,
+			                         tokens[0],
+			                         OrderBookType::ask );
+		}
+		catch (const std::exception& e)
+		{
+			std::cout << "MerkelMain::enterAsk Bad input" << std::endl;
+		}
+
+	}
+
 	std::cout << "You typed: " << input << std::endl;
 }
 
@@ -102,10 +125,17 @@ void MerkelMain::gotoNextTimeframe() {
 /*This function will receive and return the user input in response to the menu
  * option selected*/
 int MerkelMain::getUserOption() {
-	int userOption;
+	int userOption = 0;
+
+	std::string line;
 
 	std::cout << "Type in 1-6" << std::endl;
-	std::cin >> userOption;
+	std::getline(std::cin, line);
+	try {
+		userOption = std::stoi(line);
+	}
+	catch (const std::exception& e) {}
+
 	std::cout << "You chose: " << userOption << std::endl;
 	return userOption;
 }
