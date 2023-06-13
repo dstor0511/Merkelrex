@@ -20,6 +20,11 @@ public:
 
 	static OrderBookType stringToOrderBookType(const std::string &s);
 
+	static bool compareByTimeStamp(OrderBookEntry& e1, OrderBookEntry& e2) {
+
+		return e1.timestamp < e2.timestamp;
+	}
+
 	/*Data members*/
 	double price;
 	double amount;

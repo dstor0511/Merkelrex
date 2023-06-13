@@ -26,6 +26,8 @@ public:
 	/**Returns the next time after the sent time in the orderbook. If there is no next time stamp, wraps around to the start */
 	std::string getNextTime(std::string timestamp);
 
+	void insertOrder(OrderBookEntry& order);
+
 	/**This function is going to be sent a set of orders and its job is to find
 	 * the highest price in those orders. */
 	static double getHighPrice(std::vector<OrderBookEntry> &orders);
