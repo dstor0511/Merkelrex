@@ -2,7 +2,7 @@
 #include <string>
 
 /*This is a class that will store the two options of OrderBookType vector*/
-enum class OrderBookType { bid, ask, unknown };
+enum class OrderBookType { bid, ask, unknown, sale };
 
 /** The OrderBookEntry represents a row in the order book data set (i.e. a
  * single order in the order book). It can be a bid or an ask order.*/
@@ -23,6 +23,16 @@ public:
 	static bool compareByTimeStamp(OrderBookEntry& e1, OrderBookEntry& e2) {
 
 		return e1.timestamp < e2.timestamp;
+	}
+
+	static bool compareByPriceAsc(OrderBookEntry& e1, OrderBookEntry& e2) {
+
+		return e1.price < e2.price;
+	}
+
+	static bool compareByPriceDesc(OrderBookEntry& e1, OrderBookEntry& e2) {
+
+		return e1.price > e2.price;
 	}
 
 	/*Data members*/

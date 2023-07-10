@@ -28,6 +28,8 @@ public:
 
 	void insertOrder(OrderBookEntry& order);
 
+	std::vector<OrderBookEntry> matchAsksToBids(std::string product, std::string timestamp);
+
 	/**This function is going to be sent a set of orders and its job is to find
 	 * the highest price in those orders. */
 	static double getHighPrice(std::vector<OrderBookEntry> &orders);
