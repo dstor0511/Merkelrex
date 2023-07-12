@@ -2,6 +2,7 @@
 
 #include "OrderBook.h"
 #include "OrderBookEntry.h"
+#include "Wallet.h"
 #include <vector>
 
 /** The MerkelMain class represents the application itself, and it deals with
@@ -44,5 +45,9 @@ private:
 
 	std::string currentTime;
 
-	OrderBook orderBook{"test.csv"};
+	OrderBook orderBook{"20200317.csv"};
+
+	Wallet wallet;
+
+	// wallet.insertCurrency("BTC", 5);
 };

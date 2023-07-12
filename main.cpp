@@ -6,6 +6,7 @@
 #include "OrderBookEntry.h"
 #include "MerkelMain.h"
 #include "CSVReader.h"
+#include "Wallet.h"
 
 /*This is the main function that will run the program*/
 int main()
@@ -13,7 +14,10 @@ int main()
 	MerkelMain app{};
 	app.init();
 
-	// CSVReader::readCSV("20200317.csv");
-	// std::vector<OrderBookEntry> orderBook = CSVReader::readCSV("20200317.csv");
-	// std::cout << "read " << orderBook.size() << " orders" << std::endl;
+
+	// wallet.insertCurrency("USDT", 5);
+	// std::cout << wallet.toString() << std::endl;
+	// wallet.removeCurrency("USDT", 2);
+	// std::cout << wallet.toString() << std::endl;
+
 }
