@@ -19,18 +19,22 @@ public:
 	               OrderBookType _orderType,
 	               std::string username = "dataset");
 
+	/* Converts a string to an OrderBookType enum value. */
 	static OrderBookType stringToOrderBookType(const std::string &s);
 
+	/* Comparison function for sorting OrderBookEntry objects by timestamp in ascending order. */
 	static bool compareByTimeStamp(OrderBookEntry& e1, OrderBookEntry& e2) {
 
 		return e1.timestamp < e2.timestamp;
 	}
 
+	/* Comparison function for sorting OrderBookEntry objects by price in ascending order. */
 	static bool compareByPriceAsc(OrderBookEntry& e1, OrderBookEntry& e2) {
 
 		return e1.price < e2.price;
 	}
 
+	/* Comparison function for sorting OrderBookEntry objects by price in descending order. */
 	static bool compareByPriceDesc(OrderBookEntry& e1, OrderBookEntry& e2) {
 
 		return e1.price > e2.price;

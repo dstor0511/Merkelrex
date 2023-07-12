@@ -1,4 +1,11 @@
-/*Here we include the necessary contents into our library*/
+/*
+   main.cpp
+
+   This is the main entry point of the program. It initializes the MerkelMain
+   application and starts the program execution.
+
+*/
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -8,16 +15,10 @@
 #include "CSVReader.h"
 #include "Wallet.h"
 
-/*This is the main function that will run the program*/
 int main()
 {
-	MerkelMain app{};
-	app.init();
+	MerkelMain app{}; // Create an instance of the MerkelMain application
+	app.init(); // Initialize the application
 
-
-	// wallet.insertCurrency("USDT", 5);
-	// std::cout << wallet.toString() << std::endl;
-	// wallet.removeCurrency("USDT", 2);
-	// std::cout << wallet.toString() << std::endl;
-
+	return 0;
 }

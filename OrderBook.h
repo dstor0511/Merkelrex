@@ -5,35 +5,38 @@
 #include <string>
 #include <vector>
 
-/** The OrderBook class presents a high level interface on all the orders in the
- * order book data set, including query functions to find out which products are
- * in the data set, and to retrieve a subset of the orders using filters.*/
+/** The OrderBook class presents a high-level interface for working with the orders in the order book dataset.
+ * It provides functions to retrieve orders based on filters, get information about known products, and perform
+ * calculations on the orders.
+ */
 class OrderBook {
 public:
-	/** Construct, reading a csv data file */
+	/** Construct the OrderBook by reading a CSV data file */
 	OrderBook(std::string filename);
 
-	/** return vector of all known products in the dataset */
+	/** Return a vector of all known products in the dataset */
 	std::vector<std::string> getKnownProducts();
 
-	/** return vector of al Orders according to the sent filters*/
-	std::vector<OrderBookEntry> getOrders(OrderBookType type, std::string product,
-	                                      std::string timestamp);
+	/** Return a vector of orders filtered by type, product, and timestamp */
+	std::vector<OrderBookEntry> getOrders(OrderBookType type, std::string product, std::string timestamp);
 
-	/**Returns the earliest time in the orderbook*/
+	/** Get the highest price from a vector of OrderBookEntry objects */
+	static double getHighPrice(std::vector<OrderBookEntry>& orders);
+
+	/** Get the lowest price from a vector of OrderBookEntry objects */
+	static double getLowPrice(std::vector<OrderBookEntry>& orders);
+
+	/** Get the earliest timestamp in the OrderBook */
 	std::string getEarliestTime();
 
-	/**Returns the next time after the sent time in the orderbook. If there is no next time stamp, wraps around to the start */
+	/** Get the next timestamp after the given timestamp in the OrderBook */
 	std::string getNextTime(std::string timestamp);
 
+	/** Insert an OrderBookEntry into the OrderBook */
 	void insertOrder(OrderBookEntry& order);
 
+	/** Match asks to bids and generate sales based on the given product and timestamp */
 	std::vector<OrderBookEntry> matchAsksToBids(std::string product, std::string timestamp);
-
-	/**This function is going to be sent a set of orders and its job is to find
-	 * the highest price in those orders. */
-	static double getHighPrice(std::vector<OrderBookEntry> &orders);
-	static double getLowPrice(std::vector<OrderBookEntry> &orders);
 
 private:
 	std::vector<OrderBookEntry> orders;

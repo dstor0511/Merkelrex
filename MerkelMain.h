@@ -1,3 +1,9 @@
+/*
+   This file contains the declaration of the MerkelMain class, which represents
+   the application itself. It handles user input, menu printing, and the execution
+   of various functionalities.
+*/
+
 #pragma once
 
 #include "OrderBook.h"
@@ -5,8 +11,6 @@
 #include "Wallet.h"
 #include <vector>
 
-/** The MerkelMain class represents the application itself, and it deals with
- * user input and menu printing. */
 class MerkelMain {
 public:
 	MerkelMain();
@@ -48,6 +52,4 @@ private:
 	OrderBook orderBook{"20200317.csv"};
 
 	Wallet wallet;
-
-	// wallet.insertCurrency("BTC", 5);
 };
