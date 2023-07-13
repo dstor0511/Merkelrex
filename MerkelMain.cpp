@@ -9,6 +9,7 @@
 #include "MerkelMain.h"
 #include "CSVReader.h"
 #include "OrderBookEntry.h"
+#include "CandleStick.h"
 #include <iostream>
 #include <vector>
 #include <limits> // Include the <limits> header
@@ -38,10 +39,11 @@ void MerkelMain::printMenu()
 	// Print the menu options
 	std::cout << "1: Print help" << std::endl;
 	std::cout << "2: Print exchange stats" << std::endl;
-	std::cout << "3: Make an offer" << std::endl;
-	std::cout << "4: Make a bid" << std::endl;
-	std::cout << "5: Print wallet" << std::endl;
-	std::cout << "6: Continue" << std::endl;
+	std::cout << "3: Print candlestck stats" << std::endl;
+	std::cout << "4: Make an offer" << std::endl;
+	std::cout << "5: Make a bid" << std::endl;
+	std::cout << "6: Print wallet" << std::endl;
+	std::cout << "7: Continue" << std::endl;
 	std::cout << "============== " << std::endl;
 	std::cout << "Current Time is: " << currentTime << std::endl;
 }
@@ -71,6 +73,94 @@ void MerkelMain::printMarketStats()
 		std::cout << "Min bid: " << OrderBook::getLowPrice(entriesbid) << std::endl;
 		std::cout << " " << std::endl;
 	}
+}
+
+void MerkelMain::displayKnownProducts()
+{
+	// Display the known products
+	std::vector<std::string> products = orderBook.getKnownProducts();
+	for (std::string const &p : products)
+	{
+		std::cout << p << std::endl;
+	}
+}
+
+// This function will print the candlestick stats
+std::vector<Candlestick> MerkelMain::candleStickData()
+{
+	std::string orderTypeStr;
+	std::string product;
+
+	std::cout << "Enter order type (ask or bid): " << std::endl;
+	std::getline(std::cin, orderTypeStr);
+
+	displayKnownProducts();
+	std::cout << "Enter product from above: " << std::endl;
+	std::getline(std::cin, product);
+
+	// get the first timestamp and push it into the vector
+	std::vector<std::string> uniqueTimestamps;
+	std::string currentTimestamp = orderBook.getEarliestTime();
+	uniqueTimestamps.push_back(currentTimestamp);
+
+	// loop over all entries to get the unique timestamps
+	while (orderBook.getNextTime(currentTimestamp) > currentTimestamp)
+	{
+		currentTimestamp = orderBook.getNextTime(currentTimestamp);
+		uniqueTimestamps.push_back(currentTimestamp);
+	}
+
+	std::cout << "Candlestick data for " << product << " " << orderTypeStr << std::endl;
+	OrderBookType order = orderTypeStr == "ask" ? OrderBookType::ask : OrderBookType::bid;
+
+	// create a vector of Candlestick objects
+	std::vector<Candlestick> candlesticks;
+	double openPrice = 0.0;
+	double highestPrice = 0.0;
+	double lowestPrice = std::numeric_limits<double>::max();
+	double closePrice = 0.0;
+
+	for (const std::string &timestamp : uniqueTimestamps)
+	{
+		std::vector<OrderBookEntry> entries = orderBook.getOrders(order, product, timestamp);
+
+		double amount = 0.0;
+		double price = 0.0;
+
+		// loop over all entries for the current timestamp
+		for (const OrderBookEntry &entry : entries)
+		{
+			if (entry.orderType == order && entry.product == product && entry.timestamp == timestamp)
+			{
+				if (entry.price > highestPrice)
+				{
+					highestPrice = entry.price;
+				}
+				if (entry.price < lowestPrice)
+				{
+					lowestPrice = entry.price;
+				}
+
+				amount += entry.amount;
+				price += entry.price;
+			}
+		}
+		openPrice = closePrice;
+		double totalAmount = amount * price;
+		closePrice = totalAmount / amount;
+
+		Candlestick candlestick(timestamp, openPrice, highestPrice, lowestPrice, closePrice);
+		candlesticks.push_back(candlestick);
+	}
+
+	// print the candlestick data
+	for (const Candlestick &candlestick : candlesticks)
+	{
+		std::cout << "[ " << candlestick.candleTimestamp << " " << candlestick.candleOpenPrice << " " << candlestick.candleHighPrice
+				  << " " << candlestick.candleLowPrice << " " << candlestick.candleClosingPrice << " ]" << std::endl;
+	}
+
+	return candlesticks;
 }
 
 void MerkelMain::enterAsk()
@@ -220,17 +310,21 @@ void MerkelMain::processUserOption(int userOption)
 	}
 	else if (userOption == 3)
 	{
-		enterAsk();
+		candleStickData();
 	}
 	else if (userOption == 4)
 	{
-		enterBid();
+		enterAsk();
 	}
 	else if (userOption == 5)
 	{
-		printWallet();
+		enterBid();
 	}
 	else if (userOption == 6)
+	{
+		printWallet();
+	}
+	else if (userOption == 7)
 	{
 		gotoNextTimeframe();
 	}

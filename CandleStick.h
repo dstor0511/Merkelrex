@@ -1,24 +1,22 @@
 #pragma once
-
 #include <string>
-#include <vector>
 #include "OrderBookEntry.h"
+#include <vector>
+#include <map>
 
 class Candlestick
 {
 public:
-	std::string date;
-	double open;
-	double high;
-	double low;
-	double close;
+	Candlestick(
+		std::string candleTimestamp,
+		double candleOpenPrice,
+		double candleHighPrice,
+		double candleLowPrice,
+		double candleClosingPrice);
 
-	Candlestick(std::string date, double open, double high, double low, double close);
-
-	static std::vector<Candlestick> computeCandlesticks(std::string csvFilename);
-
-private:
-	static Candlestick createCandlestick(const std::vector<OrderBookEntry> &entries);
-
-	// static Candlestick createCandlestick(const std::vector<OrderBookEntry>& entries);
+	std::string candleTimestamp;
+	double candleOpenPrice;
+	double candleHighPrice;
+	double candleLowPrice;
+	double candleClosingPrice;
 };

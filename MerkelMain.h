@@ -9,6 +9,7 @@
 #include "OrderBook.h"
 #include "OrderBookEntry.h"
 #include "Wallet.h"
+#include "CandleStick.h"
 #include <vector>
 
 class MerkelMain
@@ -25,6 +26,12 @@ private:
 
 	/*This function will handle the help menu*/
 	void printHelp();
+
+	/*This function will handle the candlestick stats*/
+	std::vector<Candlestick> candleStickData();
+
+	/*This function will handle the known products*/
+	void displayKnownProducts();
 
 	/*This function will handle the market stats*/
 	void printMarketStats();
@@ -50,7 +57,7 @@ private:
 
 	std::string currentTime;
 
-	OrderBook orderBook{"20200601.csv"};
+	OrderBook orderBook{"testBig.csv"};
 
 	Wallet wallet;
 };
