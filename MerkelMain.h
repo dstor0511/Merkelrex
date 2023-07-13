@@ -11,7 +11,8 @@
 #include "Wallet.h"
 #include <vector>
 
-class MerkelMain {
+class MerkelMain
+{
 public:
 	MerkelMain();
 
@@ -49,7 +50,7 @@ private:
 
 	std::string currentTime;
 
-	OrderBook orderBook{"20200317.csv"};
+	OrderBook orderBook{"20200601.csv"};
 
 	Wallet wallet;
 };

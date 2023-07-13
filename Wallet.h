@@ -7,7 +7,8 @@
 #include "CSVReader.h"
 #include "OrderBookEntry.h"
 
-class Wallet {
+class Wallet
+{
 public:
 	Wallet();
 
@@ -50,7 +51,7 @@ public:
 	 *
 	 * @param sale The sale to process.
 	 */
-	void processSale(OrderBookEntry& sale);
+	void processSale(OrderBookEntry &sale);
 
 	/**
 	 * Generate a string representation of the wallet, showing the amount of each type of currency.

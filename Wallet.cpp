@@ -1,6 +1,7 @@
 #include "Wallet.h"
 
-Wallet::Wallet() {
+Wallet::Wallet()
+{
 	// Default constructor
 }
 
@@ -8,17 +9,22 @@ Wallet::Wallet() {
  * @param type The type of currency to insert.
  * @param amount The amount of currency to insert.
  */
-void Wallet::insertCurrency(std::string type, double amount) {
+void Wallet::insertCurrency(std::string type, double amount)
+{
 	double balance;
 
-	if (amount < 0) {
+	if (amount < 0)
+	{
 		throw std::exception{};
 	}
 
 	// Check if the currency already exists in the wallet
-	if (currencies.count(type) == 0) {
+	if (currencies.count(type) == 0)
+	{
 		balance = 0;
-	} else {
+	}
+	else
+	{
 		balance = currencies[type];
 	}
 
@@ -34,20 +40,28 @@ void Wallet::insertCurrency(std::string type, double amount) {
  * @param amount The amount of currency to remove.
  * @return True if the currency was successfully removed, false otherwise.
  */
-bool Wallet::removeCurrency(std::string type, double amount) {
-	if (amount < 0) {
+bool Wallet::removeCurrency(std::string type, double amount)
+{
+	if (amount < 0)
+	{
 		return false;
 	}
 
 	// Check if the currency exists in the wallet
-	if (currencies.count(type) == 0) {
+	if (currencies.count(type) == 0)
+	{
 		return false;
-	} else {
+	}
+	else
+	{
 		// Check if the wallet contains enough currency to remove
-		if (containsCurrency(type, amount)) {
+		if (containsCurrency(type, amount))
+		{
 			currencies[type] -= amount;
 			return true;
-		} else {
+		}
+		else
+		{
 			return false; // Not enough currency in the wallet
 		}
 	}
@@ -58,10 +72,14 @@ bool Wallet::removeCurrency(std::string type, double amount) {
  * @param amount The amount of currency to check.
  * @return True if the wallet contains the specified amount of currency or more, false otherwise.
  */
-bool Wallet::containsCurrency(std::string type, double amount) {
-	if (currencies.count(type) == 0) {
+bool Wallet::containsCurrency(std::string type, double amount)
+{
+	if (currencies.count(type) == 0)
+	{
 		return false; // Currency does not exist in the wallet
-	} else {
+	}
+	else
+	{
 		return currencies[type] >= amount; // Check if the balance is greater than or equal to the requested amount
 	}
 }
@@ -70,11 +88,13 @@ bool Wallet::containsCurrency(std::string type, double amount) {
  * @param order The OrderBookEntry representing the order to be fulfilled.
  * @return True if the wallet can fulfill the order, false otherwise.
  */
-bool Wallet::canFulfillOrder(OrderBookEntry order) {
+bool Wallet::canFulfillOrder(OrderBookEntry order)
+{
 	std::vector<std::string> currs = CSVReader::tokenise(order.product, '/');
 
 	// Check if the order is an ask
-	if (order.orderType == OrderBookType::ask) {
+	if (order.orderType == OrderBookType::ask)
+	{
 		double amount = order.amount;
 		std::string currency = currs[0];
 
@@ -83,7 +103,8 @@ bool Wallet::canFulfillOrder(OrderBookEntry order) {
 	}
 
 	// Check if the order is a bid
-	if (order.orderType == OrderBookType::bid) {
+	if (order.orderType == OrderBookType::bid)
+	{
 		double amount = order.amount * order.price;
 		std::string currency = currs[1];
 
@@ -97,11 +118,13 @@ bool Wallet::canFulfillOrder(OrderBookEntry order) {
 /** Updates the contents of the wallet after a sale.
  * @param sale The OrderBookEntry representing the sale.
  */
-void Wallet::processSale(OrderBookEntry& sale) {
+void Wallet::processSale(OrderBookEntry &sale)
+{
 	std::vector<std::string> currs = CSVReader::tokenise(sale.product, '/');
 
 	// Check if the sale is an ask sale
-	if (sale.orderType == OrderBookType::asksale) {
+	if (sale.orderType == OrderBookType::asksale)
+	{
 		double outgoingAmount = sale.amount;
 		std::string outgoingCurrency = currs[0];
 
@@ -114,7 +137,8 @@ void Wallet::processSale(OrderBookEntry& sale) {
 	}
 
 	// Check if the sale is a bid sale
-	if (sale.orderType == OrderBookType::bidsale) {
+	if (sale.orderType == OrderBookType::bidsale)
+	{
 		double incomingAmount = sale.amount;
 		std::string incomingCurrency = currs[0];
 
@@ -130,11 +154,13 @@ void Wallet::processSale(OrderBookEntry& sale) {
 /** Generates a string representation of the wallet, showing the amount of each currency.
  * @return The string representation of the wallet.
  */
-std::string Wallet::toString() {
+std::string Wallet::toString()
+{
 	std::string s;
 
 	// Iterate over each currency in the wallet
-	for (std::pair<std::string, double> pair : currencies) {
+	for (std::pair<std::string, double> pair : currencies)
+	{
 		std::string currency = pair.first;
 		double amount = pair.second;
 
