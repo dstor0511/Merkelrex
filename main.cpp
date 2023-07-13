@@ -9,16 +9,16 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <iostream>
 #include "OrderBookEntry.h"
 #include "MerkelMain.h"
 #include "CSVReader.h"
 #include "Wallet.h"
+#include "CandleStick.h"
 
 int main()
 {
-	MerkelMain app{}; // Create an instance of the MerkelMain application
-	app.init(); // Initialize the application
+   MerkelMain app{}; // Create an instance of the MerkelMain application
+   app.init();       // Initialize the application
 
-	return 0;
+   return 0;
 }
